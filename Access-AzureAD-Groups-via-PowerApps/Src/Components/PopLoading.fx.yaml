@@ -1,0 +1,67 @@
+PopLoading As CanvasComponent:
+    Fill: =RGBA(0, 0, 0, 0)
+    Height: =App.Height
+    OnDismiss: ="Text"
+    OnSave: =true
+    ThisDuration: =100
+    Width: =App.Width
+    X: =0
+    Y: =0
+    ZIndex: =1
+
+    Rectangle2_7 As rectangle:
+        BorderColor: =Transparent
+        Fill: =RGBA (38,50,56, 100)
+        Height: =640
+        Width: =1136
+        ZIndex: =1
+
+    Button2_3 As button:
+        BorderThickness: =0
+        DisabledBorderColor: =
+        DisabledColor: =
+        DisabledFill: =
+        Fill: =RGBA (54,170,152, 100)
+        Font: =Font.'Segoe UI'
+        Height: =34
+        HoverColor: =Self.Color
+        HoverFill: =ColorFade(Self.Fill, -20%)
+        OnSelect: =PopLoading.OnDismiss()
+        RadiusBottomLeft: =2
+        RadiusBottomRight: =2
+        RadiusTopLeft: =2
+        RadiusTopRight: =2
+        Size: =13
+        Text: ="OK"
+        Visible: =false
+        Width: =98
+        X: =552
+        Y: =283
+        ZIndex: =6
+
+    Image4_1 As image:
+        Height: =292
+        Image: =petronasBackground
+        Width: =442
+        X: =331
+        Y: =85
+        ZIndex: =7
+
+    Image5_1 As image:
+        Height: =116
+        Image: ='Ellipsis-1s-200px'
+        Width: =73
+        X: =516
+        Y: =329
+        ZIndex: =8
+
+    Timer1_1 As timer:
+        AutoStart: =PopLoading.Visible
+        Duration: =PopLoading.ThisDuration
+        Fill: =Transparent
+        Height: =55
+        OnTimerEnd: =PopLoading.OnDismiss()
+        Size: =10
+        Width: =111
+        ZIndex: =9
+

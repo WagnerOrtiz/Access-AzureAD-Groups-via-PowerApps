@@ -1,0 +1,296 @@
+"SolicitacoesPendentes_TESTE As screen.'phoneBrowseLayout_ver3.0'":
+    Fill: =Colors.background
+
+    "GllSolicitacoes_3 As gallery.'BrowseLayout_Vertical_ThreeTextVariant_ver4.0'":
+        Height: =439
+        Items: |-
+            =With(
+                {
+                    resultado: If(
+                       TipoAcesso = "Desenvolvedor",
+                        Filter([@'[Petronas] - Solicitacoes'], 'Criado por'.Email = User().Email),
+                        Filter([@'[Petronas] - Solicitacoes'], Status.Value = "Pendente")
+                    )
+                },
+                If(
+                    !IsBlank(TextSearchBox_2),
+                    SortByColumns(
+                        Filter(
+                            AddColumns(
+                            resultado,
+                            "Data",
+                            Criado
+                        ),
+                        TextSearchBox_2.Text in Perfil.DisplayName || TextSearchBox_2.Text in Status.Value || TextSearchBox_2.Text in RLS.Value || TextSearchBox_2.Text in Criado || TextSearchBox_2.Text in Data ),
+                        "Data",
+                        If(SortDescending1, Descending, Ascending)
+                    ),
+                    resultado
+                )
+            )
+            
+            
+            // 1a Tentativa
+            //If(
+            //    TipoAcesso = "Desenvolvedor",
+            //    SortByColumns(Filter([@'[Petronas] - Solicitacoes'], 'Criado por'.Email = User().Email && StartsWith(Title, //TextSearchBox.Text)), "Title", If(SortDescending1, Descending, Ascending)),
+            //    SortByColumns(Filter([@'[Petronas] - Solicitacoes'], Status.Value = "Pendente" && StartsWith(Title, TextSearchBox.Text)), //"Title", If(SortDescending1, Descending, Ascending))
+            //)
+            
+            
+            
+            // 2a Tentativa
+            //           AddColumns(
+            //                Filter([@'[Petronas] - Solicitacoes'], 'Criado por'.Email = User().Email),
+            //                "Pessoa",
+            //                Perfil.DisplayName
+            //            ),
+            //            AddColumns(
+            //                Filter([@'[Petronas] - Solicitacoes'], Status.Value = "Pendente"),
+            //                "Pessoa",
+            //                Perfil.DisplayName
+            //            )
+        Layout: =Layout.Vertical
+        OnSelect: =Navigate(RequestDetails, ScreenTransition.None)
+        ShowScrollbar: =false
+        TemplatePadding: =0
+        TemplateSize: =99
+        Transition: =Transition.Pop
+        Width: =1062
+        X: =33
+        Y: =155
+        ZIndex: =1
+
+        LblSolicitanteGaleria_3 As label:
+            Color: =White
+            Height: =31
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =16
+            Text: =ThisItem.Perfil.DisplayName
+            VerticalAlign: =VerticalAlign.Top
+            Width: =402
+            X: =137
+            Y: =18
+            ZIndex: =2
+
+        LblRLSGaleria_3 As label:
+            Color: =White
+            Height: =31
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =14
+            Text: =Concat(ThisItem.RLS, Value, ", ")
+            VerticalAlign: =VerticalAlign.Top
+            Width: =402
+            X: =137
+            Y: =55
+            ZIndex: =3
+
+        NextArrow_3 As icon.ChevronRight:
+            AccessibleLabel: =Self.Tooltip
+            Color: =Colors.petronas
+            Height: =60
+            Icon: =Icon.ChevronRight
+            OnSelect: |-
+                =Select(Parent);
+                Set(SelectedInGallery, ThisItem);
+                Navigate(RequestDetails)
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            TabIndex: =0
+            Tooltip: ="View item details"
+            Width: =60
+            X: =Parent.TemplateWidth - Self.Width - 5
+            Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
+            ZIndex: =4
+
+        Separator_3 As rectangle:
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =1
+            OnSelect: =Select(Parent)
+            Width: =Parent.TemplateWidth
+            Y: =Parent.TemplateHeight - 1
+            ZIndex: =5
+
+        LblStatusGaleria_3 As label:
+            Color: =White
+            Height: =33
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =14
+            Text: =ThisItem.Status.Value
+            VerticalAlign: =VerticalAlign.Top
+            Width: =137
+            X: =707
+            Y: =Parent.TemplateHeight/2-Self.Height/2
+            ZIndex: =6
+
+        ImageSolicitante_3 As image:
+            Height: =59
+            Image: =ThisItem.Perfil.Picture
+            OnSelect: =Select(Parent)
+            RadiusBottomLeft: =255
+            RadiusBottomRight: =255
+            RadiusTopLeft: =255
+            RadiusTopRight: =255
+            Width: =61
+            X: =44
+            Y: =Parent.TemplateHeight/2-Self.Height/2
+            ZIndex: =7
+
+        LblData_3 As label:
+            Align: =Align.Center
+            Color: =White
+            Height: =33
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =14
+            Text: =Left(ThisItem.Criado,10)
+            VerticalAlign: =VerticalAlign.Top
+            Width: =167
+            X: =814
+            Y: =Parent.TemplateHeight/2-Self.Height/2
+            ZIndex: =8
+
+        Button1_2 As button:
+            Color: =Transparent
+            DisabledBorderColor: =Transparent
+            DisabledColor: =Transparent
+            DisabledFill: =Transparent
+            Fill: =Transparent
+            Height: =99
+            HoverBorderColor: =Transparent
+            HoverColor: =Transparent
+            HoverFill: =RGBA(0,0,0,0.05)
+            OnSelect: =Select(Parent)
+            PressedBorderColor: =Transparent
+            PressedColor: =Transparent
+            PressedFill: =Transparent
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Size: =24
+            Text: =""
+            Width: =1062
+            ZIndex: =9
+
+    CmpHeader_6 As CmpHeader:
+        Cabecalho: ="Solicitações pendentes"
+        ZIndex: =5
+
+    IconRefresh_2 As icon.Reload:
+        AccessibleLabel: =Self.Tooltip
+        Height: =88
+        Icon: =Icon.Reload
+        OnSelect: =Refresh([@'[Petronas] - Solicitacoes'])
+        PaddingBottom: =22
+        PaddingLeft: =22
+        PaddingRight: =22
+        PaddingTop: =22
+        TabIndex: =0
+        Tooltip: ="Refresh list"
+        Width: =88
+        X: =Parent.Width - IconNewItem_2.Width - IconSortUpDown_2.Width - Self.Width
+        ZIndex: =6
+
+    IconSortUpDown_2 As icon.ArrowsUpDown:
+        AccessibleLabel: =Self.Tooltip
+        Height: =88
+        Icon: =Icon.Sort
+        OnSelect: |-
+            =UpdateContext({SortDescending1: !SortDescending1})
+        PaddingBottom: =26
+        PaddingLeft: =26
+        PaddingRight: =26
+        PaddingTop: =26
+        TabIndex: =0
+        Tooltip: =If(SortDescending1, "Sort list in reverse alphabetical order", "Sort list in alphabetical order")
+        Width: =88
+        X: =Parent.Width - IconNewItem_2.Width - Self.Width
+        ZIndex: =7
+
+    IconNewItem_2 As icon.Add:
+        AccessibleLabel: =Self.Tooltip
+        DisplayMode: =If(DataSourceInfo([@'[Petronas] - Solicitacoes'], DataSourceInfo.CreatePermission), DisplayMode.Edit, DisplayMode.Disabled)
+        Height: =88
+        Icon: =Icon.Add
+        OnSelect: =Navigate(MakeRequest, ScreenTransition.None)
+        PaddingBottom: =24
+        PaddingLeft: =24
+        PaddingRight: =24
+        PaddingTop: =24
+        TabIndex: =0
+        Tooltip: ="Create new item"
+        Width: =88
+        X: =Parent.Width - Self.Width
+        ZIndex: =8
+
+    GroupSearch_2 As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =11
+
+        TextSearchBox_2 As text:
+            Align: =Left
+            Color: =White
+            Default: =""
+            DelayOutput: =true
+            Fill: =Colors.background
+            FocusedBorderThickness: =2
+            Height: =68
+            HintText: ="Search items"
+            HoverColor: =White
+            HoverFill: =Colors.background
+            PaddingLeft: =70
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =7
+            RadiusTopLeft: =0
+            RadiusTopRight: =7
+            Size: =16
+            Width: =1062
+            X: =33
+            Y: =CmpHeader_6.Height
+            ZIndex: =2
+
+        IconSearch_2 As icon.Search:
+            Color: =RGBA(191, 190, 190, 1)
+            Fill: =Colors.background
+            Height: =68
+            HoverFill: =Colors.background
+            Icon: =Icon.Search
+            PaddingBottom: =14
+            PaddingLeft: =14
+            PaddingRight: =14
+            PaddingTop: =14
+            Tooltip: ="Search"
+            X: =33
+            Y: =TextSearchBox_2.Y
+            ZIndex: =3
+
+        Rectangle_2 As rectangle:
+            Fill: =Colors.background
+            Height: =2
+            HoverFill: =Colors.background
+            Width: =1062
+            X: =33
+            Y: =TextSearchBox_2.Y + TextSearchBox_2.Height
+            ZIndex: =4
+

@@ -1,0 +1,129 @@
+PopConfirmApprove As CanvasComponent:
+    Fill: =RGBA(0, 0, 0, 0)
+    Height: =App.Height
+    OnDismiss: ="Text"
+    OnSave: =true
+    ThisText: ="Text"
+    Width: =App.Width
+    X: =0
+    Y: =0
+    ZIndex: =1
+
+    Rectangle2_5 As rectangle:
+        BorderColor: =Transparent
+        Fill: =RGBA(30, 30, 30, 0.5)
+        Height: =640
+        Width: =1136
+        ZIndex: =1
+
+    HtmlText2_5 As htmlViewer:
+        BorderColor: =
+        Color: =
+        DisabledBorderColor: =
+        DisabledFill: =RGBA(119, 119, 119, 0.4)
+        Height: =231
+        HtmlText: |-
+            ="<div style='width: 97%;
+            height: 210px;
+            background: #FFFFFF;
+            box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;'></div>"
+        Width: =327
+        X: =440
+        Y: =172
+        ZIndex: =2
+
+    Icon1_5 As icon.Cancel:
+        BorderColor: =
+        Color: =RGBA(128, 128, 128, 1)
+        DisabledBorderColor: =
+        DisabledColor: =
+        Height: =12
+        Icon: =Icon.Cancel
+        OnSelect: =PopConfirmApprove.OnDismiss()
+        Width: =12
+        X: =727
+        Y: =190
+        ZIndex: =3
+
+    HtmlText3_5 As htmlViewer:
+        DisabledFill: =RGBA(119, 119, 119, 0.4)
+        Height: =231
+        HtmlText: |-
+            ="<div style='
+            width: 5px;
+            height: 209px;
+            
+            background: #36aa98;
+            border-radius: 20px 0px 0px 20px;'></div>"
+        Width: =18
+        X: =440
+        Y: =172
+        ZIndex: =4
+
+    Label7 As label:
+        Align: =Align.Center
+        BorderColor: =Transparent
+        DisabledBorderColor: =
+        DisabledColor: =
+        DisabledFill: =
+        Fill: =White
+        Font: =Font.'Segoe UI'
+        FontWeight: =FontWeight.Semibold
+        Height: =63
+        Text: =PopConfirmApprove.ThisText
+        Width: =259
+        X: =472
+        Y: =216
+        ZIndex: =5
+
+    BtnSim As button:
+        BorderThickness: =0
+        DisabledBorderColor: =
+        DisabledColor: =
+        DisabledFill: =
+        Fill: =RGBA (54,170,152, 100)
+        Font: =Font.'Segoe UI'
+        Height: =34
+        HoverColor: =Self.Color
+        HoverFill: =ColorFade(Self.Fill, -20%)
+        OnSelect: =PopConfirmApprove.OnSave()
+        RadiusBottomLeft: =2
+        RadiusBottomRight: =2
+        RadiusTopLeft: =2
+        RadiusTopRight: =2
+        Size: =13
+        Text: ="Sim"
+        Width: =98
+        X: =495
+        Y: =318
+        ZIndex: =6
+
+    BtnNao As button:
+        BorderColor: =RGBA (54,170,152, 100)
+        BorderThickness: =1
+        Color: =RGBA (54,170,152, 100)
+        DisabledBorderColor: =
+        DisabledColor: =
+        DisabledFill: =
+        Fill: =White
+        FocusedBorderThickness: =2
+        Font: =Font.'Segoe UI'
+        FontWeight: =FontWeight.Bold
+        Height: =36
+        HoverColor: =Self.Color
+        HoverFill: =ColorFade(Self.Fill, -5%)
+        OnSelect: =PopConfirmApprove.OnDismiss()
+        PressedColor: =Self.Color
+        PressedFill: =ColorFade(Self.Fill, -20%)
+        RadiusBottomLeft: =3
+        RadiusBottomRight: =3
+        RadiusTopLeft: =3
+        RadiusTopRight: =3
+        Size: =12
+        Text: ="Não"
+        Width: =100
+        X: =608
+        Y: =317
+        ZIndex: =7
+

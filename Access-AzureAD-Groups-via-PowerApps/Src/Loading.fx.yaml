@@ -1,0 +1,14 @@
+Loading As screen:
+    Fill: =RGBA (38,50,56, 100)
+    OnVisible: |-
+        =UpdateContext({popUpLoading: true});
+
+    PopLoading_1 As PopLoading:
+        OnDismiss: |-
+            =Set(TipoAcesso, LookUp('[Petronas] - Pessoas',Pessoas.Email = User().Email,PosicaoTenant));
+            UpdateContext({popUpLoading: false});
+            Navigate(PendingRequests)
+        ThisDuration: =2000
+        Visible: =popUpLoading
+        ZIndex: =5
+

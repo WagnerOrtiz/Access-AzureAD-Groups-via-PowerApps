@@ -1,0 +1,40 @@
+CmpHeader As CanvasComponent:
+    Cabecalho: ="Text"
+    Fill: =RGBA (54,170,152, 100)
+    Height: =88
+    Width: =1136
+    X: =0
+    Y: =0
+    ZIndex: =1
+
+    RectQuickActionBar2_1 As rectangle:
+        Fill: =RGBA (54,170,152, 100)
+        Height: =88
+        Width: =Parent.Width
+        ZIndex: =1
+
+    LblAppName2_1 As label:
+        Height: =88
+        Size: =23
+        Text: =CmpHeader.Cabecalho
+        Width: =558
+        Wrap: =false
+        X: =128
+        ZIndex: =4
+
+    IconCancel1_6 As icon.Cancel:
+        AccessibleLabel: =Self.Tooltip
+        Height: =88
+        Icon: =Icon.ChevronLeft
+        OnSelect: =Back()
+        PaddingBottom: =22
+        PaddingLeft: =22
+        PaddingRight: =22
+        PaddingTop: =22
+        TabIndex: =0
+        Tooltip: ="Cancel item"
+        Visible: =If(CmpHeader.Cabecalho = "Solicitações pendentes", false, true)
+        Width: =74
+        X: =7
+        ZIndex: =6
+

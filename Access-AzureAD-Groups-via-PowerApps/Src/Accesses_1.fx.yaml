@@ -1,0 +1,252 @@
+"Accesses_1 As screen.'phoneBrowseLayout_ver3.0'":
+    Fill: =Colors.background
+    OnVisible: =Reset(SctColaborador_3);Reset(SctRLS_3)
+
+    CmpHeader_8 As CmpHeader:
+        Cabecalho: ="Acessos vigentes"
+        ZIndex: =5
+
+    IconRefresh_3 As icon.Reload:
+        AccessibleLabel: =Self.Tooltip
+        Height: =88
+        Icon: =Icon.Reload
+        OnSelect: =Refresh([@'[Petronas] - Solicitacoes'])
+        PaddingBottom: =22
+        PaddingLeft: =22
+        PaddingRight: =22
+        PaddingTop: =22
+        TabIndex: =0
+        Tooltip: ="Refresh list"
+        Width: =88
+        X: =954
+        ZIndex: =6
+
+    IconNewItem_3 As icon.Add:
+        AccessibleLabel: =Self.Tooltip
+        DisplayMode: =If(DataSourceInfo([@'[Petronas] - Solicitacoes'], DataSourceInfo.CreatePermission), DisplayMode.Edit, DisplayMode.Disabled)
+        Height: =88
+        Icon: =Icon.Trash
+        OnSelect: |-
+            =Switch(
+                DataCardRLS_PADRAO_1.Selected.Value,
+                "Asia", UpdateContext({locGrupo: "Team Sidelab" }),
+                "America",  UpdateContext({locGrupo: "Power Apps" }),
+                "Europa",  UpdateContext({locGrupo: "Vantuil" }),
+                "America do Norte", UpdateContext({locGrupo: "97eab642-bae6-4b13-a762-dc8a98b58b2e"})
+            );
+            UpdateContext({popUpConfirmacao:true});
+        PaddingBottom: =24
+        PaddingLeft: =24
+        PaddingRight: =24
+        PaddingTop: =24
+        TabIndex: =0
+        Tooltip: ="Create new item"
+        Width: =88
+        X: =1036
+        ZIndex: =8
+
+    SctColaborador_3 As combobox:
+        BorderColor: =Colors.petronas
+        ChevronBackground: =Colors.background
+        ChevronDisabledFill: =Transparent
+        ChevronFill: =Transparent
+        ChevronHoverBackground: =DataCardRLS_PADRAO.ChevronHoverBackground
+        ChevronHoverFill: =Transparent
+        Color: =White
+        DefaultSelectedItems: =
+        DisplayFields: =["DisplayName","Email","Picture"]
+        DisplayMode: =
+        Fill: =Colors.background
+        FocusedBorderThickness: =2
+        HoverColor: =White
+        HoverFill: =ColorFade(Self.Fill, 10%)
+        InputTextPlaceholder: ="Selecione..."
+        Items: =Choices([@'[Petronas] - Solicitacoes'].Perfil)
+        OnChange: |-
+            =If(
+                !IsBlank(SctColaborador_3.Selected),
+                Set(locGruposID,AzureAD.GetMemberGroups(SctColaborador_3.Selected.Email,false));
+                Set(locMembroDe,Concat(locGruposID,AzureAD.GetGroup(Value).displayName,","));
+                ClearCollect(TabelaDeGrupos, Split(locMembroDe, ",")),
+                //ClearCollect(TabelaGruposEUsuario, AddColumns(TabelaDeGrupos, "NomeEmpregado",SctColaborador_3.Selected.DisplayName),
+                Set(locGruposID, Blank()); Set(locMembroDe, Blank())
+            )
+        PaddingLeft: =10
+        PressedColor: =White
+        PressedFill: =Colors.background
+        SearchFields: =["DisplayName"]
+        SearchItems: =Choices('[Petronas] - Solicitacoes'.Perfil,SctColaborador_3.SearchText)
+        SelectionColor: =DataCardRLS_PADRAO.SelectionColor
+        SelectionFill: =ColorFade(Self.Fill,10%)
+        SelectionTagFill: =Transparent
+        SelectMultiple: =false
+        Size: =DataCardRLS_PADRAO.Size
+        Template: =ListItemTemplate.Person
+        Tooltip: =
+        Width: =410
+        X: =85
+        Y: =166
+        ZIndex: =11
+
+    LblColaborador_3 As label:
+        Color: =Colors.petronas
+        Height: =50
+        Size: =LblEmployee.Size
+        Text: ="Colaborador"
+        Width: =410
+        Wrap: =false
+        X: =81
+        Y: =118
+        ZIndex: =12
+
+    SctRLS_3 As combobox:
+        BorderColor: =Colors.petronas
+        ChevronBackground: =Colors.background
+        ChevronFill: =White
+        ChevronHoverBackground: =DataCardRLS_PADRAO.ChevronHoverBackground
+        ChevronHoverFill: =White
+        Color: =White
+        DefaultSelectedItems: =
+        DisplayFields: =["Value"]
+        DisplayMode: =
+        Fill: =Colors.background
+        FocusedBorderThickness: =2
+        HoverColor: =White
+        HoverFill: =ColorFade(Self.Fill, 10%)
+        InputTextPlaceholder: ="Selecione..."
+        IsSearchable: =false
+        Items: =Choices([@'[Petronas] - Solicitacoes'].RLS)
+        PaddingLeft: =10
+        PressedColor: =White
+        PressedFill: =Colors.background
+        SearchFields: =["Value"]
+        SearchItems: =[]
+        SelectionColor: =DataCardRLS_PADRAO.SelectionColor
+        SelectionFill: =ColorFade(Self.Fill,10%)
+        SelectionTagFill: =Transparent
+        Size: =DataCardRLS_PADRAO.Size
+        Tooltip: =
+        Width: =410
+        X: =85
+        Y: =287
+        ZIndex: =16
+
+    Gallery2_6 As gallery.galleryVertical:
+        BorderColor: =Colors.petronas
+        BorderThickness: =1
+        Height: =235
+        Items: |-
+            =//Distinct(Filter(TabelaGruposEUsuario, Result = "Power Apps" || Result = "Vantuil" || Result = "Team Sidelab" || Result = "[Teste] - PowerApps"),Result)
+            
+            With(
+                {
+                    TabelaGruposEUsuario: AddColumns(
+                        Distinct(
+                            Filter(
+                                TabelaDeGrupos, 
+                                Result = "Power Apps" || Result = "Vantuil" || Result = "Team Sidelab" || Result = "[Teste] - PowerApps"),Result), "NomeEmpregado",SctColaborador_3.Selected.DisplayName)
+                },
+            TabelaGruposEUsuario
+            )
+        Layout: =Layout.Vertical
+        ShowScrollbar: =false
+        TemplateSize: =75
+        Width: =468
+        X: =580
+        Y: =161
+        ZIndex: =18
+
+        Label3_6 As label:
+            Color: =White
+            Height: =52
+            OnSelect: =Select(Parent)
+            Size: =11
+            Text: |-
+                =If(CountRows(TabelaDeGrupos)>0 ,"Grupo na Azure: "&ThisItem.Result, "")
+            Visible: =false
+            Width: =253
+            X: =135
+            ZIndex: =1
+
+        Label4_6 As label:
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =59
+            OnSelect: =Select(Parent)
+            Text: |-
+                =Switch(
+                    ThisItem.Result,
+                    "Power Apps", "América",
+                    "Vantuil", "Europa",
+                    "Team Sidelab", "Asia",
+                    "[Teste] - PowerApps", "America do Norte"
+                )
+            Width: =176
+            X: =24
+            ZIndex: =2
+
+        Icon1_1 As icon.ChevronRight:
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =41
+            Icon: =Icon.ChevronRight
+            OnSelect: |-
+                =Select(Parent); 
+                Set(SelectedInGallery, ThisItem);
+                Navigate(RemoveAccess)
+            Width: =32
+            X: =404
+            Y: =9
+            ZIndex: =3
+
+        Label2_1 As label:
+            Height: =32
+            OnSelect: =Select(Parent)
+            Size: =8
+            Text: =ThisItem.Result
+            Width: =116
+            X: =232
+            Y: =7
+            ZIndex: =4
+
+        Label3 As label:
+            Color: =RGBA(255, 255, 0, 1)
+            Height: =32
+            OnSelect: =Select(Parent)
+            Size: =8
+            Text: =ThisItem.NomeEmpregado
+            Width: =157
+            X: =232
+            Y: =34
+            ZIndex: =5
+
+    LblColaborador_7 As label:
+        Color: =Colors.petronas
+        Height: =35
+        Size: =LblEmployee.Size
+        Text: ="Acessos já vigentes"
+        Width: =306
+        Wrap: =false
+        X: =580
+        Y: =118
+        ZIndex: =19
+
+    LblColaborador_8 As label:
+        Color: =Colors.petronas
+        Height: =50
+        Size: =LblEmployee.Size
+        Text: ="Verificar grupos / RLS"
+        Width: =410
+        Wrap: =false
+        X: =80
+        Y: =239
+        ZIndex: =21
+
+    Button1 As button:
+        Height: =48
+        OnSelect: =ClearCollect(TesteTabela,  AddColumns(TabelaDeGrupos, "NomeEmpregado",SctColaborador_3.Selected.DisplayName))
+        Size: =14
+        Text: ="Button"
+        Width: =135
+        X: =580
+        Y: =20
+        ZIndex: =22
+

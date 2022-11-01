@@ -1,0 +1,101 @@
+PopBlock As CanvasComponent:
+    Fill: =RGBA(0, 0, 0, 0)
+    Height: =App.Height
+    OnDismiss: ="Text"
+    OnSave: =true
+    Warning: ="Text"
+    Width: =App.Width
+    X: =0
+    Y: =0
+    ZIndex: =1
+
+    Rectangle2_6 As rectangle:
+        BorderColor: =Transparent
+        Fill: =RGBA(30, 30, 30, 0.5)
+        Height: =640
+        Width: =1136
+        ZIndex: =1
+
+    HtmlText2_6 As htmlViewer:
+        BorderColor: =
+        Color: =
+        DisabledBorderColor: =
+        DisabledFill: =RGBA(119, 119, 119, 0.4)
+        Height: =209
+        HtmlText: |-
+            ="<div style='width: 97%;
+            height: 190px;
+            background: #FFFFFF;
+            box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;'></div>"
+        Width: =327
+        X: =440
+        Y: =172
+        ZIndex: =2
+
+    Icon1_6 As icon.Cancel:
+        BorderColor: =
+        Color: =RGBA(128, 128, 128, 1)
+        DisabledBorderColor: =
+        DisabledColor: =
+        Height: =12
+        Icon: =Icon.Cancel
+        OnSelect: =PopBlock.OnDismiss()
+        Width: =12
+        X: =727
+        Y: =190
+        ZIndex: =3
+
+    HtmlText3_6 As htmlViewer:
+        DisabledFill: =RGBA(119, 119, 119, 0.4)
+        Height: =214
+        HtmlText: |-
+            ="<div style='
+            width: 5px;
+            height: 189px;
+            
+            background: #36aa98;
+            border-radius: 20px 0px 0px 20px;'></div>"
+        Width: =17
+        X: =440
+        Y: =172
+        ZIndex: =4
+
+    Label7_1 As label:
+        Align: =Align.Center
+        BorderColor: =Transparent
+        DisabledBorderColor: =
+        DisabledColor: =
+        DisabledFill: =
+        Fill: =White
+        Font: =Font.'Segoe UI'
+        FontWeight: =FontWeight.Semibold
+        Height: =63
+        Text: =PopBlock.Warning
+        Width: =259
+        X: =472
+        Y: =206
+        ZIndex: =5
+
+    Button2_2 As button:
+        BorderThickness: =0
+        DisabledBorderColor: =
+        DisabledColor: =
+        DisabledFill: =
+        Fill: =RGBA (54,170,152, 100)
+        Font: =Font.'Segoe UI'
+        Height: =34
+        HoverColor: =Self.Color
+        HoverFill: =ColorFade(Self.Fill, -20%)
+        OnSelect: =PopBlock.OnDismiss()
+        RadiusBottomLeft: =2
+        RadiusBottomRight: =2
+        RadiusTopLeft: =2
+        RadiusTopRight: =2
+        Size: =13
+        Text: ="OK"
+        Width: =98
+        X: =552
+        Y: =291
+        ZIndex: =6
+

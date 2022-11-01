@@ -1,0 +1,235 @@
+"MakeRequest As screen.'phoneDetailEditLayout_ver3.0'":
+    Fill: =Colors.background
+    OnVisible: =Clear(TabelaDeGrupos)
+
+    SctStatus As dropdown:
+        Default: =
+        Items: =Choices([@'[Petronas] - Solicitacoes'].Status)
+        Size: =21
+        Visible: =false
+        Width: =400
+        X: =74
+        Y: =422
+        ZIndex: =1
+
+    LblStatus As label:
+        Height: =45
+        Size: =21
+        Text: ="Status"
+        Visible: =false
+        Width: =358
+        Wrap: =false
+        X: =74
+        Y: =358
+        ZIndex: =2
+
+    SctRLS As combobox:
+        BorderColor: =Colors.petronas
+        ChevronBackground: =Colors.background
+        ChevronFill: =White
+        ChevronHoverBackground: =DataCardRLS_PADRAO.ChevronHoverBackground
+        ChevronHoverFill: =White
+        Color: =White
+        DefaultSelectedItems: =
+        DisplayFields: =["Value"]
+        DisplayMode: =
+        Fill: =Colors.background
+        FocusedBorderThickness: =2
+        HoverColor: =White
+        HoverFill: =ColorFade(Self.Fill, 10%)
+        InputTextPlaceholder: ="Selecione..."
+        Items: =Choices([@'[Petronas] - Solicitacoes'].RLS)
+        PaddingLeft: =10
+        PressedColor: =White
+        PressedFill: =Colors.background
+        SearchFields: =["Value"]
+        SearchItems: =Choices('[Petronas] - Solicitacoes'.RLS,SctRLS.SearchText)
+        SelectionColor: =DataCardRLS_PADRAO.SelectionColor
+        SelectionFill: =ColorFade(Self.Fill,10%)
+        SelectionTagFill: =Transparent
+        Size: =DataCardRLS_PADRAO.Size
+        Tooltip: =
+        Width: =400
+        X: =74
+        Y: =281
+        ZIndex: =3
+
+    LblRLS As label:
+        Color: =Colors.petronas
+        Height: =44
+        Size: =LblEmployee.Size
+        Text: ="RLS"
+        Width: =400
+        Wrap: =false
+        X: =70
+        Y: =236
+        ZIndex: =4
+
+    SctEmployee As combobox:
+        BorderColor: =Colors.petronas
+        ChevronBackground: =Colors.background
+        ChevronDisabledFill: =Transparent
+        ChevronFill: =Transparent
+        ChevronHoverBackground: =DataCardRLS_PADRAO.ChevronHoverBackground
+        ChevronHoverFill: =Transparent
+        Color: =White
+        DefaultSelectedItems: =
+        DisplayFields: =["DisplayName","Email","Picture"]
+        DisplayMode: =
+        Fill: =Colors.background
+        FocusedBorderThickness: =2
+        HoverColor: =White
+        HoverFill: =ColorFade(Self.Fill, 10%)
+        InputTextPlaceholder: ="Selecione..."
+        Items: =Choices([@'[Petronas] - Solicitacoes'].Perfil)
+        OnChange: |-
+            =If(
+                !IsBlank(SctEmployee.Selected),
+                UpdateContext({locGruposID: AzureAD.GetMemberGroups(SctEmployee.Selected.Email,false)});
+                UpdateContext({locMembroDe:Concat(locGruposID,AzureAD.GetGroup(Value).displayName,",")});
+                ClearCollect(TabelaDeGrupos, Split(locMembroDe, ",")),
+                Clear(TabelaDeGrupos)
+            )
+        PaddingLeft: =10
+        PressedColor: =White
+        PressedFill: =Colors.background
+        SearchFields: =["DisplayName"]
+        SearchItems: =Choices('[Petronas] - Solicitacoes'.Perfil,SctEmployee.SearchText)
+        SelectionColor: =DataCardRLS_PADRAO.SelectionColor
+        SelectionFill: =ColorFade(Self.Fill,10%)
+        SelectionTagFill: =Transparent
+        SelectMultiple: =false
+        Size: =DataCardRLS_PADRAO.Size
+        Template: =ListItemTemplate.Person
+        Tooltip: =
+        Width: =400
+        X: =74
+        Y: =174
+        ZIndex: =5
+
+    LblEmployee As label:
+        AutoHeight: =true
+        Color: =Colors.petronas
+        Height: =48
+        Size: =15
+        Text: ="Colaborador"
+        Width: =640
+        Wrap: =false
+        X: =70
+        Y: =126
+        ZIndex: =6
+
+    CmpHeader_1 As CmpHeader:
+        Cabecalho: ="Solicitar acesso"
+        ZIndex: =7
+
+    IconAccept1 As icon.Check:
+        AccessibleLabel: =Self.Tooltip
+        Height: =88
+        Icon: =Icon.Check
+        OnSelect: |
+            =If(
+                Len(SctEmployee.Selected.DisplayName) > 0 &&
+                Len(SctRLS.Selected.Value) > 0,
+                UpdateContext({popUpConfirmacao: true}),
+                UpdateContext({popUpBlock: true})
+            )
+        PaddingBottom: =22
+        PaddingLeft: =22
+        PaddingRight: =22
+        PaddingTop: =22
+        TabIndex: =0
+        Tooltip: ="Submit item"
+        Width: =108
+        X: =1028
+        ZIndex: =8
+
+    GllAccessToday As gallery.galleryVertical:
+        BorderColor: =Colors.petronas
+        BorderThickness: =1
+        Height: =322
+        Items: =Distinct(Filter(TabelaDeGrupos, Result = "Power Apps" || Result = "Vantuil" || Result = "Team Sidelab" || Result = "[Teste] - PowerApps"),Result)
+        Layout: =Layout.Vertical
+        ShowScrollbar: =false
+        TemplateSize: =59
+        Width: =468
+        X: =599
+        Y: =167
+        ZIndex: =9
+
+        Label3_1 As label:
+            Color: =White
+            Height: =52
+            OnSelect: =Select(Parent)
+            Size: =11
+            Text: |-
+                =If(CountRows(TabelaDeGrupos)>0 ,"Grupo na Azure: "&ThisItem.Result, "")
+            Width: =269
+            X: =189
+            Y: =7
+            ZIndex: =1
+
+        Label4_1 As label:
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =59
+            OnSelect: =Select(Parent)
+            Text: |-
+                =Switch(
+                    ThisItem.Result,
+                    "Power Apps", "América",
+                    "Vantuil", "Europa",
+                    "Team Sidelab", "Asia",
+                    "[Teste] - PowerApps", "America do Norte"
+                )
+            Width: =176
+            ZIndex: =2
+
+    LblAccessToday As label:
+        Color: =Colors.petronas
+        Height: =55
+        Size: =LblEmployee.Size
+        Text: ="Acessos já vigentes"
+        Width: =306
+        Wrap: =false
+        X: =599
+        Y: =119
+        ZIndex: =10
+
+    PopConfirmApprove_1 As PopConfirmApprove:
+        OnDismiss: |-
+            =UpdateContext({popUpConfirmacao:false})
+        OnSave: |-
+            =UpdateContext({popUpLoading: true});
+            
+            ForAll(
+                SctRLS.SelectedItems,
+                Patch(
+                    '[Petronas] - Solicitacoes',
+                    Defaults('[Petronas] - Solicitacoes'),
+                    {
+                        Perfil: SctEmployee.Selected,
+                        RLS: Table(ThisRecord)
+                    }    
+                )
+            );
+            UpdateContext({popUpConfirmacao:false});
+        ThisText: |-
+            ="Solicitar: "&Concat(SctRLS.SelectedItems, Value, ", ")
+        Visible: =popUpConfirmacao
+        ZIndex: =11
+
+    PopBlock_1 As PopBlock:
+        OnDismiss: |-
+            =UpdateContext({popUpBlock:false})
+        Visible: =popUpBlock
+        Warning: ="Preencha todos os campos"
+        ZIndex: =12
+
+    PopLoading1 As PopLoading:
+        OnDismiss: |-
+            =UpdateContext({popUpLoading: false});
+            Navigate(PendingRequests)
+        ThisDuration: =1500
+        Visible: =popUpLoading
+        ZIndex: =13
+

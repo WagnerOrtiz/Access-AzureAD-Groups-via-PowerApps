@@ -1,0 +1,5 @@
+App As appinfo:
+    BackEnabled: =false
+    OnStart: |-
+        =Set(Colors, {petronas: RGBA(54,170,152,100), background: RGBA (38,50,56, 100)});
+

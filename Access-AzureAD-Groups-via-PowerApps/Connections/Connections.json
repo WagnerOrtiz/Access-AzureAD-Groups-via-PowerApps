@@ -1,0 +1,78 @@
+{
+  "37d2e5bf-4630-49d8-bc70-a6f3dc2b8317": {
+    "connectionParameters": {
+      "sku": "Enterprise"
+    },
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "Azure AD",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1600/1.0.1600.3026/azuread/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_azuread",
+      "parameterHints": {},
+      "parameterHintsV2": {}
+    },
+    "datasets": {},
+    "dataSources": [
+      "AzureAD"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "37d2e5bf-4630-49d8-bc70-a6f3dc2b8317"
+  },
+  "412d60e8-1ab3-49c6-bee2-9f11f2f5d09e": {
+    "connectionParameters": {
+      "sku": "Enterprise"
+    },
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "Usuários do Office 365",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1593/1.0.1593.2980/office365users/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_office365users",
+      "parameterHints": {},
+      "parameterHintsV2": {}
+    },
+    "datasets": {},
+    "dataSources": [
+      "Office365Users"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "412d60e8-1ab3-49c6-bee2-9f11f2f5d09e"
+  },
+  "d1a7be27-0b6f-40aa-8ab4-8ef12a22a920": {
+    "connectionParameters": {
+      "sku": "Enterprise"
+    },
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "SharePoint",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1601/1.0.1601.3047/sharepointonline/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_sharepointonline",
+      "parameterHints": {},
+      "parameterHintsV2": {}
+    },
+    "datasets": {
+      "https://datasidetecnologia.sharepoint.com/sites/EquipedoWagnao2": {
+        "dataSources": {
+          "[Petronas] - Solicitacoes": {
+            "tableName": "8dcae50d-f372-466c-92ef-dd46686664b6"
+          }
+        }
+      },
+      "https://datasidetecnologia.sharepoint.com/sites/EquipedoWagnao2/": {
+        "dataSources": {
+          "[Petronas] - Pessoas": {
+            "tableName": "41144eb0-b4ea-4914-b5e0-c1560c8a2b47"
+          }
+        }
+      }
+    },
+    "dataSources": [
+      "[Petronas] - Solicitacoes",
+      "[Petronas] - Pessoas"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "d1a7be27-0b6f-40aa-8ab4-8ef12a22a920"
+  }
+}

@@ -1,0 +1,515 @@
+"RemoveAccess As screen.'phoneDetailViewLayout_ver3.0'":
+    Fill: =Colors.background
+    OnVisible: |
+        =Clear(TabelaDeGrupos);
+        UpdateContext({locGruposID: AzureAD.GetMemberGroups(DataCardSolicitante_1.Selected.Email,false)});
+        UpdateContext({locMembroDe:Concat(locGruposID,AzureAD.GetGroup(Value).displayName,",")});
+        ClearCollect(TabelaDeGrupos, Split(locMembroDe, ","));
+        
+        UpdateContext({popUpConfirmacao:false});
+        UpdateContext({popUpBlock:false});
+        UpdateContext({popUpReprovacao:false});
+        If(TipoAcesso = "Desenvolvedor", UpdateContext({displaysForm:false}), UpdateContext({displaysForm:true}));
+
+    FormDetalhes_1 As form:
+        BorderColor: =Colors.petronas
+        DataSource: =TesteTabela
+        Item: =Gallery2_5.Selected
+        Width: =510
+        X: =52
+        Y: =110
+        ZIndex: =1
+
+        Perfil_DataCard_1 As typedDataCard.comboBoxEditCard:
+            BorderColor: =Colors.petronas
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Perfil"
+            Default: =
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'[Petronas] - Solicitacoes'],DataSourceInfo.DisplayName,"Perfil")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =110
+            Required: =false
+            Update: =DataCardSolicitante_1.Selected
+            Width: =510
+            X: =0
+            Y: =0
+            ZIndex: =14
+
+            DataCardSolicitante_1 As combobox:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                ChevronBackground: =DataCardRLS_PADRAO_1.ChevronBackground
+                ChevronDisabledFill: =Transparent
+                ChevronFill: =Transparent
+                ChevronHoverBackground: =Transparent
+                ChevronHoverFill: =Transparent
+                Color: =DataCardRLS_PADRAO_1.Color
+                DefaultSelectedItems: =Parent.Default
+                DisplayFields: =["Result","Email","Picture"]
+                DisplayMode: =If(displaysForm && TipoAcesso = "Desenvolvedor", Edit, View)
+                Fill: =DataCardRLS_PADRAO_1.Fill
+                FocusedBorderThickness: =2
+                Height: =DataCardRLS_PADRAO_1.Height
+                HoverColor: =Colors.petronas
+                HoverFill: =DataCardRLS_PADRAO_1.HoverFill
+                InputTextPlaceholder: ="Selecione..."
+                IsSearchable: =false
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                PressedColor: =Transparent
+                PressedFill: =DataCardRLS_PADRAO_1.PressedFill
+                SearchFields: =["Result"]
+                SearchItems: =[]
+                SelectionColor: =DataCardRLS_PADRAO_1.SelectionColor
+                SelectionFill: =DataCardRLS_PADRAO_1.SelectionFill
+                SelectionTagColor: =DataCardRLS_PADRAO_1.SelectionTagColor
+                SelectionTagFill: =DataCardRLS_PADRAO_1.SelectionTagFill
+                SelectMultiple: =false
+                Size: =DataCardRLS_PADRAO_1.Size
+                Template: =ListItemTemplate.Person
+                Tooltip: =Parent.DisplayName
+                Width: =DataCardRLS_PADRAO_1.Width
+                X: =30
+                Y: =DatacardLblSolicitante_1.Y + DatacardLblSolicitante_1.Height + 5
+                ZIndex: =1
+
+            DatacardLblSolicitante_1 As label:
+                AutoHeight: =true
+                Color: =Colors.petronas
+                Height: =48
+                HoverColor: =Colors.petronas
+                Size: =DataCardRLS_PADRAO_1.Size
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =2
+
+            ErrorMessage5_1 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardSolicitante_1.Y + DataCardSolicitante_1.Height
+                ZIndex: =3
+
+            StarVisible5_1 As label:
+                Align: =Align.Center
+                Height: =DatacardLblSolicitante_1.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DatacardLblSolicitante_1.Y
+                ZIndex: =4
+
+        RLS_DataCard_1 As typedDataCard.comboBoxEditCard:
+            BorderColor: =Colors.petronas
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="RLS"
+            Default: =
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'[Petronas] - Solicitacoes'],DataSourceInfo.DisplayName,"RLS")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =DataCardRLS_PADRAO_1.Selected
+            Width: =510
+            X: =0
+            Y: =1
+            ZIndex: =14
+
+            DataCardRLS_PADRAO_1 As combobox:
+                BorderColor: =If(IsBlank(Parent.Error), Colors.petronas, Color.Red)
+                ChevronBackground: =Colors.background
+                ChevronHoverBackground: =Colors.background
+                Color: =White
+                DefaultSelectedItems: =ThisItem.RLS
+                DisplayFields: =["Value"]
+                DisplayMode: =If(displaysForm && TipoAcesso = "Desenvolvedor", Edit, View)
+                Fill: =Colors.background
+                FocusedBorderThickness: =2
+                Height: =45
+                HoverColor: =White
+                HoverFill: =Colors.background
+                InputTextPlaceholder: ="Selecione..."
+                Items: =Choices([@'[Petronas] - Solicitacoes'].RLS).Value
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                PressedFill: =Colors.background
+                SearchFields: =["Value"]
+                SearchItems: =Search(Choices([@'[Petronas] - Solicitacoes'].RLS).Value,DataCardRLS_PADRAO_1.SearchText,"Value")
+                SelectionColor: =White
+                SelectionFill: =ColorFade(Self.Fill,10%)
+                SelectionTagColor: =WhiteSmoke
+                Size: =16
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 80
+                X: =30
+                Y: =DataCardLblRLS_1.Y + DataCardLblRLS_1.Height + 5
+                ZIndex: =1
+
+            DataCardLblRLS_1 As label:
+                AutoHeight: =true
+                Color: =Colors.petronas
+                Height: =48
+                Size: =DatacardLblSolicitante_1.Size
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =2
+
+            ErrorMessage7_1 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardRLS_PADRAO_1.Y + DataCardRLS_PADRAO_1.Height
+                ZIndex: =3
+
+            StarVisible7_1 As label:
+                Align: =Align.Center
+                Height: =DataCardLblRLS_1.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardLblRLS_1.Y
+                ZIndex: =4
+
+        Status_DataCard_1 As typedDataCard.comboBoxEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Status"
+            Default: =ThisItem.Status
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'[Petronas] - Solicitacoes'],DataSourceInfo.DisplayName,"Status")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =DataCardStatus_1.Selected
+            Visible: =If(TipoAcesso = "KeyUser", true, false)
+            Width: =510
+            X: =0
+            Y: =2
+            ZIndex: =14
+
+            DataCardStatus_1 As combobox:
+                BorderColor: =DataCardRLS_PADRAO_1.BorderColor
+                ChevronBackground: =DataCardRLS_PADRAO_1.ChevronBackground
+                ChevronFill: =DataCardRLS_PADRAO_1.ChevronFill
+                ChevronHoverBackground: =DataCardRLS_PADRAO_1.ChevronHoverBackground
+                ChevronHoverFill: =DataCardRLS_PADRAO_1.ChevronHoverFill
+                Color: =DataCardRLS_PADRAO_1.Color
+                DefaultSelectedItems: =Parent.Default
+                DisplayFields: =["Value"]
+                DisplayMode: =If(displaysForm, Edit, View)
+                Fill: =DataCardRLS_PADRAO_1.Fill
+                FocusedBorderThickness: =2
+                Height: =DataCardRLS_PADRAO_1.Height
+                HoverBorderColor: =DataCardRLS_PADRAO_1.HoverBorderColor
+                HoverColor: =DataCardRLS_PADRAO_1.HoverColor
+                HoverFill: =DataCardRLS_PADRAO_1.HoverFill
+                Items: =Choices([@'[Petronas] - Solicitacoes'].Status)
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                PressedBorderColor: =DataCardRLS_PADRAO_1.PressedBorderColor
+                PressedColor: =DataCardRLS_PADRAO_1.PressedColor
+                PressedFill: =DataCardRLS_PADRAO_1.PressedFill
+                SearchFields: =["Value"]
+                SearchItems: =Choices('[Petronas] - Solicitacoes'.Status,DataCardStatus_1.SearchText)
+                SelectionColor: =DataCardRLS_PADRAO_1.SelectionColor
+                SelectionFill: =DataCardRLS_PADRAO_1.SelectionFill
+                SelectionTagColor: =DataCardRLS_PADRAO_1.SelectionTagColor
+                SelectionTagFill: =DataCardRLS_PADRAO_1.SelectionTagFill
+                SelectMultiple: =false
+                Size: =DataCardRLS_PADRAO_1.Size
+                Tooltip: =Parent.DisplayName
+                Width: =DataCardRLS_PADRAO_1.Width
+                X: =30
+                Y: =DataCardLblStatus_1.Y + DataCardLblStatus_1.Height + 5
+                ZIndex: =1
+
+            DataCardLblStatus_1 As label:
+                AutoHeight: =true
+                Color: =DatacardLblSolicitante_1.Color
+                Height: =48
+                Size: =DatacardLblSolicitante_1.Size
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =2
+
+            ErrorMessage6_1 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardStatus_1.Y + DataCardStatus_1.Height
+                ZIndex: =3
+
+            StarVisible6_1 As label:
+                Align: =Align.Center
+                Height: =DataCardLblStatus_1.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardLblStatus_1.Y
+                ZIndex: =4
+
+    ImageSolicitanteDetalhes_1 As image:
+        Height: =43
+        Image: =SelectedInGallery.Perfil.Picture
+        Width: =41
+        X: =166
+        Y: =110
+        ZIndex: =2
+
+    CmpHeader_7 As CmpHeader:
+        Cabecalho: ="Detalhes da solicitação"
+        ZIndex: =3
+
+    IconCheck_Aprovador_1 As icon.Edit:
+        AccessibleLabel: =Self.Tooltip
+        DisplayMode: =If(DataSourceInfo([@'[Petronas] - Solicitacoes'], DataSourceInfo.EditPermission), DisplayMode.Edit, DisplayMode.Disabled)
+        Height: =88
+        Icon: =Icon.Check
+        OnSelect: |
+            =Switch( 
+                DataCardStatus_1.Selected.Value, 
+                "Pendente", UpdateContext({popUpBlock:true}),
+                "Reprovado", UpdateContext({popUpReprovacao:true}),
+                "Aprovado", UpdateContext({popUpConfirmacao:true})
+            );
+            Switch(
+                DataCardRLS_PADRAO_1.Selected.Value,
+                "Asia", UpdateContext({locGrupo: "Team Sidelab" }),
+                "America",  UpdateContext({locGrupo: "Power Apps" }),
+                "Europa",  UpdateContext({locGrupo: "Vantuil" }),
+                "America do Norte", UpdateContext({locGrupo: "97eab642-bae6-4b13-a762-dc8a98b58b2e"})
+            )
+        PaddingBottom: =24
+        PaddingLeft: =24
+        PaddingRight: =24
+        PaddingTop: =24
+        TabIndex: =0
+        Tooltip: ="Edit this item"
+        Visible: |-
+            =true
+            //If(TipoAcesso = "Desenvolvedor", true, false)
+        Width: =88
+        X: =1048
+        Y: =130
+        ZIndex: =4
+
+    IconCheck_Solicitante_1 As icon.Edit:
+        AccessibleLabel: =Self.Tooltip
+        DisplayMode: =If(DataSourceInfo([@'[Petronas] - Solicitacoes'], DataSourceInfo.EditPermission), DisplayMode.Edit, DisplayMode.Disabled)
+        Height: =72
+        Icon: =Icon.Check
+        OnSelect: |
+            =ForAll(
+                DataCardRLS_PADRAO_1.SelectedItems,
+                Patch(
+                    '[Petronas] - Solicitacoes',
+                    Defaults('[Petronas] - Solicitacoes'),
+                    {
+                        Perfil: DataCardSolicitante_1.Selected,
+                        RLS: Table(ThisRecord),
+                        Status: DataCardStatus_1.Selected
+                    }
+                )
+            );
+            
+            Navigate(PendingRequests)
+        PaddingBottom: =24
+        PaddingLeft: =24
+        PaddingRight: =24
+        PaddingTop: =24
+        TabIndex: =0
+        Tooltip: ="Edit this item"
+        Visible: =If(TipoAcesso = "Desenvolvedor", true, false)
+        Width: =88
+        X: =1048
+        Y: =87
+        ZIndex: =5
+
+    Label6_1 As label:
+        Color: =RGBA(255, 255, 0, 1)
+        Height: =70
+        Size: =21
+        Text: =locGrupo
+        Width: =560
+        X: =70
+        Y: =540
+        ZIndex: =6
+
+    Button2_6 As button:
+        Align: =Align.Left
+        Height: =48
+        OnSelect: |-
+            =Switch(
+                DataCardRLS_PADRAO_1.Selected.Value,
+                "Asia", UpdateContext({locGrupo: "Team Sidelab" }),
+                "America",  UpdateContext({locGrupo: "Power Apps" }),
+                "Europa",  UpdateContext({locGrupo: "Vantuil" }),
+                "America do Norte", UpdateContext({locGrupo: "97eab642-bae6-4b13-a762-dc8a98b58b2e"})
+            );
+            UpdateContext({popUpConfirmacao:true})
+        PaddingLeft: =45
+        Size: =14
+        Text: ="Remove"
+        Width: =189
+        X: =895
+        Y: =20
+        ZIndex: =7
+
+    Label8_1 As label:
+        Color: =RGBA(255, 255, 0, 1)
+        Height: =70
+        Size: =21
+        Text: =AzureAD.GetUser(DataCardSolicitante_1.Selected.Email).id
+        Width: =560
+        X: =70
+        Y: =481
+        ZIndex: =8
+
+    IconDelete1_1 As icon.Trash:
+        AccessibleLabel: =Self.Tooltip
+        DisplayMode: =If(!IsBlank(GllRequests.Selected) && DataSourceInfo([@'[Petronas] - Solicitacoes'], DataSourceInfo.DeletePermission), DisplayMode.Edit, DisplayMode.Disabled)
+        Height: =80
+        Icon: =Icon.Trash
+        OnSelect: |-
+            =Switch(
+                DataCardRLS_PADRAO_1.Selected.Value,
+                "Asia", UpdateContext({locGrupo: "Team Sidelab" }),
+                "America",  UpdateContext({locGrupo: "Power Apps" }),
+                "Europa",  UpdateContext({locGrupo: "Vantuil" }),
+                "America do Norte", UpdateContext({locGrupo: "97eab642-bae6-4b13-a762-dc8a98b58b2e"})
+            );
+            UpdateContext({popUpConfirmacao:true})
+        PaddingBottom: =24
+        PaddingLeft: =24
+        PaddingRight: =24
+        PaddingTop: =24
+        TabIndex: =0
+        Tooltip: ="Delete this item"
+        Visible: =If(TipoAcesso = "KeyUser", false, true)
+        Width: =80
+        X: =999
+        Y: =4
+        ZIndex: =9
+
+    Gallery2_3 As gallery.galleryVertical:
+        BorderColor: =Colors.petronas
+        BorderThickness: =1
+        Height: =322
+        Items: =Distinct(Filter(TabelaDeGrupos, Result = "Power Apps" || Result = "Vantuil" || Result = "Team Sidelab" || Result = "[Teste] - PowerApps"),Result)
+        Layout: =Layout.Vertical
+        ShowScrollbar: =false
+        TemplateSize: =59
+        Width: =468
+        X: =599
+        Y: =167
+        ZIndex: =10
+
+        Label3_3 As label:
+            Color: =White
+            Height: =52
+            OnSelect: =Select(Parent)
+            Size: =11
+            Text: |-
+                =If(CountRows(TabelaDeGrupos)>0 ,"Grupo na Azure: "&ThisItem.Result, "")
+            Width: =269
+            X: =189
+            Y: =7
+            ZIndex: =1
+
+        Label4_3 As label:
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =59
+            OnSelect: =Select(Parent)
+            Text: |-
+                =Switch(
+                    ThisItem.Result,
+                    "Power Apps", "América",
+                    "Vantuil", "Europa",
+                    "Team Sidelab", "Asia",
+                    "[Teste] - PowerApps", "America do Norte"
+                )
+            Width: =176
+            ZIndex: =2
+
+    PopConfirmarReprovacao_3 As PopConfirmReprove:
+        OnDismiss: |-
+            =UpdateContext({popUpReprovacao:false})
+        OnSave: |-
+            =Patch('[Petronas] - Solicitacoes', GllRequests.Selected, {Status: DataCardStatus_1.Selected});
+            UpdateContext({popUpLoading:true});
+        Visible: =popUpReprovacao
+        ZIndex: =12
+
+    PopBlock_3 As PopBlock:
+        OnDismiss: |-
+            =UpdateContext({popUpBlock:false})
+        Visible: =popUpBlock
+        Warning: ="Selecione 'Aprovado' ou 'Reprovado'"
+        ZIndex: =13
+
+    PopLoading_3 As PopLoading:
+        OnDismiss: |
+            =UpdateContext({popUpConfirmacao:false});
+            UpdateContext({popUpLoading:false});
+            Navigate(PendingRequests)
+        ThisDuration: =1500
+        Visible: =popUpLoading
+        ZIndex: =14
+
+    PopConfirmar_3 As PopConfirmApprove:
+        OnDismiss: |-
+            =UpdateContext({popUpConfirmacao:false})
+        OnSave: |-
+            =AzureAD.RemoveMemberFromGroup(locGrupo, AzureAD.GetUser(DataCardSolicitante_1.Selected.Email).id);
+            Patch(
+                '[Petronas] - Solicitacoes',
+                Defaults('[Petronas] - Solicitacoes'),
+                {
+                    Perfil: DataCardSolicitante_1.Selected,
+                    RLS: DataCardRLS_PADRAO_1.SelectedItems,
+                    Status: {Value: "Removido"}
+                }
+            );
+            UpdateContext({popUpLoading:true})
+        ThisText: ="Remover o acesso de "&DataCardRLS_PADRAO_1.Selected.Value &" ?"
+        Visible: =popUpConfirmacao
+        ZIndex: =15
+
